@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Consulta de Choferes</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+        <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'/>
+        <style>
+            html{
+                background-color: #cccccc;
+            }
+            body{
+                width: 90%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            h1{
+                background-color: black;
+                color: white;
+                text-align: center;
+                text-transform: uppercase;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                font-family: 'Roboto', sans-serif;
+            }
+            #uno{
+                margin-top:0;
+                width: 60%;
+                float: right;
+                margin-left: 100px;
+            }
+            #dos{
+                margin-top: 50px;
+                margin-bottom: 50px;
+                margin-left: 20px;
+            }
+            #tres{
+                width: 30%;
+                height: 100px; 
+                position: relative;
+                margin-bottom: 50px;
+            }
+            h2{
+               margin-left: 20px;
+               background-color: black;
+               color: white;
+               width: 28%;
+               border-radius: 15px;
+               padding: 20px;
+               text-transform: uppercase;
+               font-family: 'Passion One', cursive;
+            }
+            #cuatro{
+                margin-top: 30px;
+                margin-bottom: 50px;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h1>consulta de choferes</h1>
+        <f:event type="preRenderView" listener="#{choferBean.cargar()}"/>
+        <f:event type="preRenderView" listener="#{viajeBean.cargar()}"/>
+        <f:event type="preRenderView" listener="#{rutaBean.cargar()}"/>
+        <h:form>
+            <div id="uno">
+            <p:dataTable id="tabla" var="car" value="#{choferBean.choferes}">
+                <p:column headerText="id">
+                    <h:outputText value="#{car.id}" />
+                </p:column>
+ 
+                <p:column headerText="chofer">
+                    <h:outputText value="#{car.chofer}" />
+                </p:column>
+ 
+                <p:column headerText="fecha de ingreso">
+                    <h:outputText value="#{car.fecha}" />
+                </p:column>
+                
+                <p:column headerText="categoria">
+                    <h:outputText value="#{car.categoria}" />
+                </p:column>
+                
+                <p:column headerText="sueldo">
+                <h:outputText value="#{car.sueldo}" />
+                </p:column>
+
+            </p:dataTable>
+            </div>
+            
+            <div id="dos">
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Nro. de choferes: "/>
+                <p:inputText id="caja1" value="#{choferBean.fila}"/>
+                
+                <p:outputLabel value="Total de Sueldos: "/>
+                <p:inputText id="caja2" value="#{choferBean.total}"/>
+            </p:panelGrid>
+            </div>
+            
+            <div id="tres">
+            <p:outputLabel value="seleccione codigo: " style="margin-left: 20px;"/>
+            <p:selectOneMenu value="#{viajeBean.cho.id}" style="margin-left: 20px; top: 10px;">
+                <f:selectItems value="#{choferBean.choferes}" var="cho" itemLabel="#{cho.id}" itemValue="#{cho.id}"/>
+            </p:selectOneMenu>
+            <p:commandButton value="ver" actionListener="#{viajeBean.cargar()}" update="viaje" style="margin-left: 20px;
+                             top: 50px; right: 265px;"/>
+            </div>
+            <h2>viajes programados realizados por el chofer</h2>
+            
+            <div id="cuatro">
+            <p:dataTable id="viaje" value="#{viajeBean.lista}" var="v">
+                <p:column headerText="idviaje">
+                    <h:outputText value="#{v.idViaje}"/>
+                </p:column>
+                    
+                <p:column headerText="idbus">
+                    <h:outputText value="#{v.idBus}"/>
+                </p:column>
+                
+                <p:column headerText="cod. ruta">
+                    <h:outputText value="#{v.codRuta}"/>
+                </p:column>
+                
+                <p:column headerText="cod. chofer">
+                    <h:outputText value="#{v.codChofer}"/>
+                </p:column>
+                
+                <p:column headerText="horas viaje">
+                    <h:outputText value="#{v.horasViaje}"/>
+                </p:column>
+                
+                <p:column headerText="fecha viaje">
+                    <h:outputText value="#{v.fechaViaje}"/>
+                </p:column>
+                
+                <p:column headerText="costo viaje">
+                    <h:outputText value="#{v.costoViaje}"/>
+                </p:column>
+                
+            </p:dataTable> 
+            </div>
+        </h:form>   
+    </h:body>
+</html>
+
